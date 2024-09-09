@@ -1,0 +1,29 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: workload-isolation.currencyservice
+  namespace: hipstershop
+  labels:
+    projectcalico.org/tier: workload-isolation
+spec:
+  tier: workload-isolation
+  order: 100
+  selector: app == "currencyservice"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == "checkoutservice"
+      destination:
+        ports:
+          - '7000'
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == "frontend"
+      destination:
+        ports:
+          - '7000'
+  types:
+    - Ingress

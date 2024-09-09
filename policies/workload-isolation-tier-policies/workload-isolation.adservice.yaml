@@ -1,0 +1,23 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: workload-isolation.adservice
+  namespace: hipstershop
+  annotations:
+  labels:
+    projectcalico.org/tier: workload-isolation
+spec:
+  tier: workload-isolation
+  order: 100
+  selector: app == "adservice"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == "frontend"
+      destination:
+        ports:
+          - '9555'
+  types:
+    - Ingress

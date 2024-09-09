@@ -1,0 +1,22 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: workload-isolation.emailservice
+  namespace: hipstershop
+  labels:
+    projectcalico.org/tier: workload-isolation
+spec:
+  tier: workload-isolation
+  order: 100
+  selector: app == "emailservice"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == "checkoutservice"
+      destination:
+        ports:
+          - '8080'
+  types:
+    - Ingress

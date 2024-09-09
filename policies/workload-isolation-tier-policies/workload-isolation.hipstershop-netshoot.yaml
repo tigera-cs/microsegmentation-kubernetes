@@ -1,0 +1,23 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: workload-isolation.hipstershop-netshoot
+  namespace: hipstershop
+  labels:
+    projectcalico.org/tier: workload-isolation
+spec:
+  tier: workload-isolation
+  order: 100
+  selector: app == "netshoot"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      source: {}
+      destination: {}
+  egress:
+    - action: Allow
+      source: {}
+      destination: {}
+  types:
+    - Ingress
+    - Egress

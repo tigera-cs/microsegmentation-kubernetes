@@ -1,0 +1,43 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: namespace-isolation.tenant-01-yaobank
+  namespace: yaobank
+  labels:
+    projectcalico.org/tier: namespace-isolation
+spec:
+  tier: namespace-isolation
+  order: 1
+  selector: ''
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      source:
+        selector: all()
+      destination: {}
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app.kubernetes.io/name == "ingress-nginx"
+        namespaceSelector: projectcalico.org/name == "ingress-nginx"
+      destination:
+        selector: app == "customer"
+        ports:
+          - '80'
+  egress:
+    - action: Allow
+      source: {}
+      destination:
+        selector: all()
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == "summary"
+      destination:
+        ports:
+          - '443'
+        domains:
+          - www.google.com
+  types:
+    - Ingress
+    - Egress

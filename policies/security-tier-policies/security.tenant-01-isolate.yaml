@@ -1,0 +1,45 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: security.tenant-01-isolate
+spec:
+  tier: security
+  order: 2
+  selector: tenant == "tenant-1"
+  namespaceSelector: ''
+  serviceAccountSelector: ''
+  ingress:
+    - action: Pass
+      source:
+        selector: tenant == "tenant-1"
+      destination: {}
+    - action: Pass
+      source:
+        namespaceSelector: projectcalico.org/name == "ingress-nginx"
+      destination: {}
+    - action: Deny
+      source: {}
+      destination: {}
+  egress:
+    - action: Pass
+      source: {}
+      destination:
+        selector: tenant == "tenant-1"
+    - action: Pass
+      protocol: TCP
+      source: {}
+      destination:
+        ports:
+          - '443'
+    - action: Pass
+      protocol: UDP
+      source: {}
+      destination:
+        ports:
+          - '53'
+    - action: Deny
+      source: {}
+      destination: {}
+  types:
+    - Ingress
+    - Egress

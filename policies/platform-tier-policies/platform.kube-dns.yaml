@@ -1,0 +1,41 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: platform.kube-dns
+  namespace: kube-system
+  labels:
+    projectcalico.org/tier: platform
+spec:
+  tier: platform
+  order: 1
+  selector: k8s-app == "kube-dns"
+  serviceAccountSelector: ''
+  ingress:
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        ports:
+          - '53'
+    - action: Allow
+      protocol: TCP
+      source: {}
+      destination:
+        ports:
+          - '53'
+  egress:
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        ports:
+          - '53'
+    - action: Allow
+      protocol: TCP
+      source: {}
+      destination:
+        ports:
+          - '53'
+  types:
+    - Ingress
+    - Egress
