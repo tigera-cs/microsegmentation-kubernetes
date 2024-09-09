@@ -1,7 +1,7 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: namespace-isolation.namespace-isolation-default-pass
+  name: namespace-isolation.ni-default-pass
 spec:
   tier: namespace-isolation
   order: 10000

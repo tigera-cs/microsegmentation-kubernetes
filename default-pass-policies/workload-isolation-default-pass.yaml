@@ -1,7 +1,7 @@
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
 metadata:
-  name: workload-isolation.workload-isolation-default-pass
+  name: workload-isolation.wi-default-pass
 spec:
   tier: workload-isolation
   order: 10000
