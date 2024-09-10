@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: customer
+        tenant: tenant-1
         version: v1
     spec:
       serviceAccountName: customer

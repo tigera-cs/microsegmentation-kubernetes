@@ -7,7 +7,6 @@ spec:
   selector:
     matchLabels:
       app: shippingservice
-    spec:
   template:
     metadata:
       labels:

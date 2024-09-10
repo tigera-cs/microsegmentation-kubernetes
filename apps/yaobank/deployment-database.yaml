@@ -13,6 +13,7 @@ spec:
   template:
     metadata:
       labels:
+        tenant: tenant-1
         app: database
         version: v1
     spec:
