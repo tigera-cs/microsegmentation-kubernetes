@@ -3,8 +3,6 @@ kind: NetworkPolicy
 metadata:
   name: platform.kube-dns
   namespace: kube-system
-  labels:
-    projectcalico.org/tier: platform
 spec:
   tier: platform
   order: 1
@@ -13,13 +11,17 @@ spec:
   ingress:
     - action: Allow
       protocol: UDP
-      source: {}
+      source:
+        nets:
+          - 10.224.0.0/16
       destination:
         ports:
           - '53'
     - action: Allow
       protocol: TCP
-      source: {}
+      source:
+        nets:
+          - 10.224.0.0/16
       destination:
         ports:
           - '53'
